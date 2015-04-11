@@ -14,11 +14,9 @@ function PlayerShip () {
   var elem = this._domElement = document.createElement('div');
   var $elem = $(elem);
   $elem.css({
-    width: 20,
-    height: 20,
-    backgroundColor: '#444',
     position: 'absolute'
   });
+  $elem.addClass('spaceship');
 };
 
 PlayerShip.prototype = Object.create(Entity.prototype);

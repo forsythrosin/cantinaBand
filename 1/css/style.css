@@ -2,3 +2,21 @@ body, html {
     margin: 0px;
     background-color: rgba(200, 230, 255, 1.0);
 }
+
+.spaceship {
+  width: 246px;
+  height: 151px;
+  background-image: url('../images/spaceship.png');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+}
+
+.spaceship.scream {
+  background-position: center bottom;
+}
+
+
+#frequencySpectrum {
+    position: absolute;
+}

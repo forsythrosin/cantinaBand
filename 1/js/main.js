@@ -27,7 +27,35 @@ add(ground);
 
 
 
+var audioController = require('./audioController');
+audioController.initialize(false);
+
+audioController.onUpStart(function() {
+  movingUp = true;
+  $('.spaceship').addClass('scream');
+  //console.log('upStart');
+}).onUpEnd(function() {
+  movingUp = false;
+  $('.spaceship').removeClass('scream');
+  //console.log('upEnd');
+}).onDownStart(function() {
+  movingDown = true;
+  $('.spaceship').addClass('scream');
+  //console.log('downStart');
+}).onDownEnd(function() {
+  movingDown = false;
+  $('.spaceship').removeClass('scream');
+  //console.log('downEnd');
+}).onShoot(function() {
+  var bullet = playerShip.shoot();
+  $('.spaceship').removeClass('scream');
+  add(bullet);
+  //console.log('shoot');
+});
+
+
 window.requestAnimationFrame(function loop() {
+  audioController.step();
 
   Object.keys(entities).forEach(function (id) {
     var entity = entities[id];
@@ -35,14 +63,14 @@ window.requestAnimationFrame(function loop() {
   });
 
   var speed = vec2.create();
-  if (movingUp) {
+  if (movingDown) {
     speed[1] += 5;
   }
-  if (movingDown) {
+  if (movingUp) {
     speed[1] -= 5;
   }
   
-  playerShip.setSpeed(speed)
+  playerShip.setSpeed(speed);
   
   window.requestAnimationFrame(loop);
 });
@@ -59,19 +87,24 @@ $(document.body).keydown(function (event) {
   }
   
   if (event.which === 40) {
-    movingUp = true;
+    movingDown = true;
+    $('.spaceship').addClass('scream');
   }
   if (event.which === 38) {
-    movingDown = true;
+    movingUp = true;
+    $('.spaceship').addClass('scream');
   }
 });
 
 
 $(document.body).keyup(function (event) {
   if (event.which === 40) {
-    movingUp = false;
+    movingDown = false;
+    $('.spaceship').removeClass('scream');
   }
   if (event.which === 38) {
-    movingDown = false;
+    movingUp = false;
+    $('.spaceship').removeClass('scream');
   }
 });
+
