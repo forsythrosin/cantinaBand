@@ -9,6 +9,7 @@ var Shooter = require('./shooter');
 var wHeight = $(document).height();
 var wWidth = $(document).width();
 var windowSize = [wWidth, wHeight];
+console.log('ws', windowSize);
 
 var playerShip = new PlayerShip(windowSize);
 var ground = new Ground(4, 0.0, 0.3, 1.0);
@@ -25,11 +26,18 @@ var movingUp = false;
 var movingDown = false;
 
 var spawnShooter = 100;
+var gameOver = false;
 
 
 function add(entity) {
   entities[entity.getId()] = entity;
   $(document.body).append(entity.getDomElement());
+}
+
+
+function remove(entity) {
+  delete entity[entity.getId()];
+  $(entity.getDomElement()).remove();
 }
 
 function addShooter(shooter) {
@@ -40,13 +48,32 @@ function addShooter(shooter) {
 
 function addPlayerBullet(playerBullet) {
   playerBullets[playerBullet.getId()] = playerBullet;
+  console.log(playerBullet.getId());
   add(playerBullet);
+}
+
+function removePlayerBullet(playerBullet) {
+  delete playerBullets[playerBullet.getId()];
+  remove(playerBullet);
 }
 
 
 function addEnemyBullet(enemyBullet) {
   enemyBullets[enemyBullet.getId()] = enemyBullet;
   add(enemyBullet);
+}
+
+function removeEnemyBullet(enemyBullet) {
+  delete enemyBullets[enemyBullet.getId()];
+  remove(enemyBullet);
+}
+
+
+function setGameOver() {
+  gameOver = true;
+  setTimeout(function () {
+    location.reload();
+  }, 2000);
 }
 
 
@@ -86,13 +113,53 @@ audioController.onUpStart(function() {
 
 
 window.requestAnimationFrame(function loop() {
+  if (gameOver) return;
   audioController.step();
 
+  Object.keys(enemyBullets).forEach(function (id) {
+    var bullet = enemyBullets[id];
+    if (bullet.isOutOfBounds()) removeEnemyBullet(bullet);
+  });
+
+  Object.keys(playerBullets).forEach(function (id) {
+    var bullet = playerBullets[id];
+    if (bullet.isOutOfBounds()) removePlayerBullet(bullet);
+  });
+  
   Object.keys(entities).forEach(function (id) {
     var entity = entities[id];
     entity.step();
   });
 
+
+  Object.keys(enemyBullets).forEach(function (enemyBulletId) {
+    var eb = enemyBullets[enemyBulletId];
+    var pPos = playerShip.getPos();
+    var ePos = eb.getPos();
+    
+    var dist = vec2.squaredDistance(pPos, ePos);
+    if (dist < 20000) {
+      setGameOver();
+    }
+    
+  });
+  
+  Object.keys(playerBullets).forEach(function (playerBulletId) {
+    var pb = playerBullets[playerBulletId];
+    Object.keys(enemyBullets).forEach(function (enemyBulletId) {
+      var eb = enemyBullets[enemyBulletId];
+      var pPos = pb.getPos();
+      var ePos = eb.getPos();
+
+      var dist = vec2.squaredDistance(pPos, ePos);
+      if (dist < 2500) {
+        removePlayerBullet(pb);
+        removeEnemyBullet(eb);
+      }
+    });
+  });
+  
+  
   var speed = vec2.create();
   if (movingDown) {
     speed[1] += 5;
@@ -103,7 +170,7 @@ window.requestAnimationFrame(function loop() {
 
   if (spawnShooter < 0) {
     var pos = vec2.set(vec2.create());
-    var s = new Shooter(vec2.set(vec2.create(), window.innerWidth, (1 - Math.random()*0.1) * window.innerHeight), 4);
+    var s = new Shooter(vec2.set(vec2.create(), window.innerWidth, (1 - Math.random()*0.1) * window.innerHeight), 4, windowSize);
     addShooter(s);
     spawnShooter += 200 + Math.random() * 100;
   }
@@ -131,7 +198,7 @@ $(document.body).keydown(function (event) {
   var speed = vec2.create();  
   if (event.which === 32) { // space
     var bullet = playerShip.shoot();
-    add(bullet);
+    addPlayerBullet(bullet);
   }
   
   if (event.which === 40) {
