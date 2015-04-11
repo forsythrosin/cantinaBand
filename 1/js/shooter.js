@@ -11,7 +11,7 @@ function Shooter(pos, speed, ws) {
   
   this._pos = pos;
   var elem = this._domElement = document.createElement('div');
-  this._shootTimer = 100;
+  this._shootTimer = Math.random() * 100;
 
   $(elem).css({
     position: 'absolute',
@@ -32,7 +32,7 @@ Shooter.prototype = Object.create(Entity.prototype);
 
 Shooter.prototype.shootMaybe = function() {
   if (this._shootTimer <= 0) {
-    this._shootTimer += 170 + Math.random()*150;
+    this._shootTimer += 100 + Math.random()*80;
     var eb = new EnemyBullet(windowSize);
     var pos = vec2.clone(this.getPos());
     var speed = vec2.set(vec2.create(), -4, -3);
