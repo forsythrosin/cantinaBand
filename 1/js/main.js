@@ -25,6 +25,7 @@ var movingUp = false;
 var movingDown = false;
 
 var spawnShooter = 100;
+var gameOver = false;
 
 
 function add(entity) {
@@ -67,6 +68,14 @@ function removeEnemyBullet(enemyBullet) {
 }
 
 
+function setGameOver() {
+  gameOver = true;
+  setTimeout(function () {
+    location.reload();
+  }, 2000);
+}
+
+
 add(playerShip);
 add(ground3);
 add(ground2);
@@ -88,7 +97,7 @@ audioController.onUpStart(function() {
   //console.log('upEnd');
 }).onDownStart(function() {
   movingDown = true;
-  $('.spaceship').addClass('scream');
+  $('.spaceship').addClass74('scream');
   //console.log('downStart');
 }).onDownEnd(function() {
   movingDown = false;
@@ -103,6 +112,7 @@ audioController.onUpStart(function() {
 
 
 window.requestAnimationFrame(function loop() {
+  if (gameOver) return;
   audioController.step();
 
   
@@ -112,6 +122,17 @@ window.requestAnimationFrame(function loop() {
   });
 
 
+  Object.keys(enemyBullets).forEach(function (enemyBulletId) {
+    var eb = enemyBullets[enemyBulletId];
+    var pPos = playerShip.getPos();
+    var ePos = eb.getPos();
+    
+    var dist = vec2.squaredDistance(pPos, ePos);
+    if (dist < 8000) {
+      setGameOver();
+    }
+    
+  });
   
   Object.keys(playerBullets).forEach(function (playerBulletId) {
     var pb = playerBullets[playerBulletId];
@@ -122,14 +143,11 @@ window.requestAnimationFrame(function loop() {
 
       var dist = vec2.squaredDistance(pPos, ePos);
       if (dist < 2500) {
-        console.log('removing');
         removePlayerBullet(pb);
         removeEnemyBullet(eb);
       }
     });
   });
-
-
   
   
   var speed = vec2.create();
