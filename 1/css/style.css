@@ -37,6 +37,16 @@ body, html {
   z-index: 11;
 }
 
+.missilo {
+  width: 150px;
+  height: 20px;
+  margin-left: -65px;
+  background-image: url('../images/missilo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 10;
+}
+
 #frequencySpectrum {
     position: absolute;
 }

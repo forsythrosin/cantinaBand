@@ -15,10 +15,8 @@ function Shooter(pos, speed, ws) {
 
   $(elem).css({
     position: 'absolute',
-    width: 20,
-    height: 20,
-    backgroundColor: '#f00'
   });
+  $(elem).addClass('missilo');
 
   $(this._domElement).css({
     'left': this._pos[0] + "px",
@@ -35,6 +33,7 @@ Shooter.prototype.shootMaybe = function() {
     this._shootTimer += 100 + Math.random()*80;
     var eb = new EnemyBullet(windowSize);
     var pos = vec2.clone(this.getPos());
+    pos[1] -= 80;
     var speed = vec2.set(vec2.create(), -4, -3);
     eb.setPos(pos);
     eb.setSpeed(speed);
