@@ -32,7 +32,7 @@ Shooter.prototype = Object.create(Entity.prototype);
 
 Shooter.prototype.shootMaybe = function() {
   if (this._shootTimer <= 0) {
-    this._shootTimer += 70 + Math.random()*50;
+    this._shootTimer += 170 + Math.random()*150;
     var eb = new EnemyBullet(windowSize);
     var pos = vec2.clone(this.getPos());
     var speed = vec2.set(vec2.create(), -4, -3);
