@@ -18,6 +18,7 @@ var ground3 = new Ground(1, 0.2, 0.45, 0.25);
 var entities = {};
 var shooters = {};
 var enemyBullets = {};
+var playerBullets = {};
 
 
 var movingUp = false;
@@ -34,6 +35,12 @@ function add(entity) {
 function addShooter(shooter) {
   shooters[shooter.getId()] = shooter;
   add(shooter);
+}
+
+
+function addPlayerBullet(playerBullet) {
+  playerBullets[playerBullet.getId()] = playerBullet;
+  add(playerBullet);
 }
 
 
@@ -73,7 +80,7 @@ audioController.onUpStart(function() {
 }).onShoot(function() {
   var bullet = playerShip.shoot();
   $('.spaceship').removeClass('scream');
-  add(bullet);
+  addPlayerBullet(bullet);
   //console.log('shoot');
 });
 

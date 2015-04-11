@@ -17,6 +17,11 @@ function Shooter(pos, speed) {
     height: 20,
     backgroundColor: '#f00'
   });
+
+  $(this._domElement).css({
+    'left': this._pos[0] + "px",
+    'top': this._pos[1] + "px"
+  });
 }
 
 Shooter.prototype = Object.create(Entity.prototype);
