@@ -3,21 +3,42 @@ var $ = require('jquery');
 var glMatrix = require('gl-matrix');
 var vec2 = require('gl-matrix').vec2;
 var Ground = require('./ground'); 
+var Shooter = require('./shooter');
+
 
 var playerShip = new PlayerShip();
-var ground = new Ground(4, 0.0, 0.3, 1.0);
+
+var ground = new Ground(4, 0.1, 0.35, 1.0);
 var ground2 = new Ground(2, 0.2, 0.35, 0.5);
 var ground3 = new Ground(1, 0.2, 0.45, 0.25);
 
-var entities = {}
+var entities = {};
+var shooters = {};
+var enemyBullets = {};
+
+
 var movingUp = false;
 var movingDown = false;
+
+var spawnShooter = 100;
 
 
 function add(entity) {
   entities[entity.getId()] = entity;
   $(document.body).append(entity.getDomElement());
 }
+
+function addShooter(shooter) {
+  shooters[shooter.getId()] = shooter;
+  add(shooter);
+}
+
+
+function addEnemyBullet(enemyBullet) {
+  enemyBullets[enemyBullet.getId()] = enemyBullet;
+  add(enemyBullet);
+}
+
 
 add(playerShip);
 add(ground3);
@@ -69,9 +90,26 @@ window.requestAnimationFrame(function loop() {
   if (movingUp) {
     speed[1] -= 5;
   }
+
+  if (spawnShooter < 0) {
+    var pos = vec2.set(vec2.create());
+    var s = new Shooter(vec2.set(vec2.create(), window.innerWidth, (1 - Math.random()*0.1) * window.innerHeight), 4);
+    addShooter(s);
+    spawnShooter += 200 + Math.random() * 100;
+  }
+
+
+  Object.keys(shooters).forEach(function (shooterId) {
+    var shooter = shooters[shooterId];
+    var enemyBullet = shooter.shootMaybe();
+    if (enemyBullet) {
+      addEnemyBullet(enemyBullet);
+    }
+  });
   
   playerShip.setSpeed(speed);
-  
+
+  spawnShooter--;
   window.requestAnimationFrame(loop);
 });
 
