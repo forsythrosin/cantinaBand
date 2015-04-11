@@ -1,0 +1,17 @@
+{
+  "name": "scream",
+  "version": "0.0.0",
+  "description": "A game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cantina Band",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-browserify": "~3.7.0",
+    "handlebars": "~3.0.1",
+    "browserify-handlebars": "~1.0.0"
+  }
+}
