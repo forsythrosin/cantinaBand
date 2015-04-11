@@ -23,7 +23,7 @@ void place(int col, vector<bool> occupiedRow, vector<bool> occupiedDiag1, vector
   
   for (int row = 0; row < size; ++row) {
     int diag1Index = row + col;
-    int diag2Index = 8 + row - col;
+    int diag2Index = size + row - col;
     if (!occupiedRow[row] && !occupiedDiag1[diag1Index] && !occupiedDiag2[diag2Index]) {
       vector<bool> newOccupiedRow{occupiedRow};
       vector<bool> newOccupiedDiag1{occupiedDiag1};
