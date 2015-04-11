@@ -3,12 +3,16 @@ var PlayerBullet = require('./playerBullet');
 var vec2 = require('gl-matrix').vec2;
 var Entity = require('./entity');
 
-var bulletSpeed = vec2.set(vec2.create(), 4, 0);
+var bulletSpeed = vec2.set(vec2.create(), 7, 0);
+var bulletOffset = [196, 70];
 
+var windowSize;
 
-function PlayerShip () {
+function PlayerShip (ws) {
+  windowSize = ws;
   Entity.call(this);
   this._pos = vec2.create();
+  this.setPos([20,0]);
   this._speed = vec2.create();
 
   var elem = this._domElement = document.createElement('div');
@@ -46,13 +50,17 @@ PlayerShip.prototype.addSpeed = function (speed) {
 PlayerShip.prototype.step = function () {
   this._pos[0] += this._speed[0];
   this._pos[1] += this._speed[1];
+  if (this._pos[1] < 0) this._pos[1] = 0;
+  if (this._pos[1] > windowSize[1] - 200) this._pos[1] = windowSize[1] - 200;
   this.setPos(this._pos); // haha, just to update!
 };
 
 PlayerShip.prototype.shoot = function () {
   var bullet = new PlayerBullet();
-  console.log(this.getPos());
-  bullet.setPos(this.getPos());
+  var bulletPos = vec2.clone(this.getPos());
+  bulletPos[0] += bulletOffset[0];
+  bulletPos[1] += bulletOffset[1];
+  bullet.setPos(bulletPos);
   bullet.setSpeed(bulletSpeed);
   return bullet;
 }

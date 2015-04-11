@@ -89,7 +89,7 @@ function getCurrentFrequency(plotFrequencies) {
   accAmp = n * avg;
   var ampDiff = accAmp - prevAccAmplitude;
   
-  if (prevAccAmplitude !== undefined && ampDiff > 2500) {
+  if (prevAccAmplitude !== undefined && ampDiff > 2300) {
     state = states.SHOOT;
   } else if ((amplitude - avg) > 150) {
     if (max > 8) {

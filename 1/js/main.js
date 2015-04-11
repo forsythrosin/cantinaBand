@@ -6,9 +6,12 @@ var Ground = require('./ground');
 var Shooter = require('./shooter');
 
 
-var playerShip = new PlayerShip();
+var wHeight = $(document).height();
+var wWidth = $(document).width();
+var windowSize = [wWidth, wHeight];
 
-var ground = new Ground(4, 0.1, 0.35, 1.0);
+var playerShip = new PlayerShip(windowSize);
+var ground = new Ground(4, 0.0, 0.3, 1.0);
 var ground2 = new Ground(2, 0.2, 0.35, 0.5);
 var ground3 = new Ground(1, 0.2, 0.45, 0.25);
 
