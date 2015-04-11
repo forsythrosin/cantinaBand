@@ -2,10 +2,12 @@ var PlayerShip = require('./playerShip');
 var $ = require('jquery');
 var glMatrix = require('gl-matrix');
 var vec2 = require('gl-matrix').vec2;
-//var Ground = require('ground'); 
+var Ground = require('./ground'); 
 
 var playerShip = new PlayerShip();
-//var ground = new Ground();
+var ground = new Ground(4, 0.0, 0.3, 1.0);
+var ground2 = new Ground(2, 0.2, 0.35, 0.5);
+var ground3 = new Ground(1, 0.2, 0.45, 0.25);
 
 var entities = {}
 var movingUp = false;
@@ -18,7 +20,12 @@ function add(entity) {
 }
 
 add(playerShip);
-//add(ground);
+add(ground3);
+add(ground2);
+add(ground);
+
+
+
 
 window.requestAnimationFrame(function loop() {
 
