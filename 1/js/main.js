@@ -32,6 +32,12 @@ function add(entity) {
   $(document.body).append(entity.getDomElement());
 }
 
+
+function remove(entity) {
+  delete entity[entity.getId()];
+  $(entity.getDomElement()).remove();
+}
+
 function addShooter(shooter) {
   shooters[shooter.getId()] = shooter;
   add(shooter);
@@ -40,13 +46,24 @@ function addShooter(shooter) {
 
 function addPlayerBullet(playerBullet) {
   playerBullets[playerBullet.getId()] = playerBullet;
+  console.log(playerBullet.getId());
   add(playerBullet);
+}
+
+function removePlayerBullet(playerBullet) {
+  delete playerBullets[playerBullet.getId()];
+  remove(playerBullet);
 }
 
 
 function addEnemyBullet(enemyBullet) {
   enemyBullets[enemyBullet.getId()] = enemyBullet;
   add(enemyBullet);
+}
+
+function removeEnemyBullet(enemyBullet) {
+  delete enemyBullets[enemyBullet.getId()];
+  remove(enemyBullet);
 }
 
 
@@ -88,11 +105,33 @@ audioController.onUpStart(function() {
 window.requestAnimationFrame(function loop() {
   audioController.step();
 
+  
   Object.keys(entities).forEach(function (id) {
     var entity = entities[id];
     entity.step();
   });
 
+
+  
+  Object.keys(playerBullets).forEach(function (playerBulletId) {
+    var pb = playerBullets[playerBulletId];
+    Object.keys(enemyBullets).forEach(function (enemyBulletId) {
+      var eb = enemyBullets[enemyBulletId];
+      var pPos = pb.getPos();
+      var ePos = eb.getPos();
+
+      var dist = vec2.squaredDistance(pPos, ePos);
+      if (dist < 2500) {
+        console.log('removing');
+        removePlayerBullet(pb);
+        removeEnemyBullet(eb);
+      }
+    });
+  });
+
+
+  
+  
   var speed = vec2.create();
   if (movingDown) {
     speed[1] += 5;
@@ -131,7 +170,7 @@ $(document.body).keydown(function (event) {
   var speed = vec2.create();  
   if (event.which === 32) { // space
     var bullet = playerShip.shoot();
-    add(bullet);
+    addPlayerBullet(bullet);
   }
   
   if (event.which === 40) {

@@ -22,6 +22,7 @@ function Shooter(pos, speed) {
     'left': this._pos[0] + "px",
     'top': this._pos[1] + "px"
   });
+
 }
 
 Shooter.prototype = Object.create(Entity.prototype);
