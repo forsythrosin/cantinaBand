@@ -24,8 +24,8 @@ function Ground(speed, low, high, opacity) {
   path.setAttribute("stroke-width", 0);  
   path.setAttribute("opacity", 1);
 
-  var sky = [200, 230, 255];
-  var ground = [0, 100, 0];
+  var sky = [33, 33, 33];
+  var ground = [255, 182, 117];
 
   var mix = [Math.round(ground[0]*opacity + sky[0]*(1-opacity)),
              Math.round(ground[1]*opacity + sky[1]*(1-opacity)),

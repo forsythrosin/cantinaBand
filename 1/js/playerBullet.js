@@ -1,6 +1,7 @@
 var $ = require('jquery');
 var vec2 = require('gl-matrix').vec2;
 var Entity = require('./entity');
+var acc = [0, 0.02];
 
 function PlayerBullet() {
   Entity.call(this);
@@ -10,11 +11,9 @@ function PlayerBullet() {
   var elem = this._domElement = document.createElement('div');
   var $elem = $(elem);
   $elem.css({
-    width: 20,
-    height: 20,
-    backgroundColor: '#900',
     position: 'absolute'
   });
+  $elem.addClass('duck');
 }
 
 PlayerBullet.prototype = Object.create(Entity.prototype);
@@ -33,6 +32,8 @@ PlayerBullet.prototype.setSpeed = function (speed) {
 };
 
 PlayerBullet.prototype.step = function () {
+  this._speed[0] += acc[0];
+  this._speed[1] += acc[1];
   this._pos[0] += this._speed[0];
   this._pos[1] += this._speed[1];
   this.setPos(this._pos); // haha, just to update!
