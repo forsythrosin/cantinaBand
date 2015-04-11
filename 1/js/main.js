@@ -9,6 +9,7 @@ var Shooter = require('./shooter');
 var wHeight = $(document).height();
 var wWidth = $(document).width();
 var windowSize = [wWidth, wHeight];
+console.log('ws', windowSize);
 
 var playerShip = new PlayerShip(windowSize);
 var ground = new Ground(4, 0.0, 0.3, 1.0);
@@ -96,7 +97,7 @@ window.requestAnimationFrame(function loop() {
 
   if (spawnShooter < 0) {
     var pos = vec2.set(vec2.create());
-    var s = new Shooter(vec2.set(vec2.create(), window.innerWidth, (1 - Math.random()*0.1) * window.innerHeight), 4);
+    var s = new Shooter(vec2.set(vec2.create(), window.innerWidth, (1 - Math.random()*0.1) * window.innerHeight), 4, windowSize);
     addShooter(s);
     spawnShooter += 200 + Math.random() * 100;
   }

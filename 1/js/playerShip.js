@@ -56,7 +56,7 @@ PlayerShip.prototype.step = function () {
 };
 
 PlayerShip.prototype.shoot = function () {
-  var bullet = new PlayerBullet();
+  var bullet = new PlayerBullet(windowSize);
   var bulletPos = vec2.clone(this.getPos());
   bulletPos[0] += bulletOffset[0];
   bulletPos[1] += bulletOffset[1];

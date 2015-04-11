@@ -25,6 +25,15 @@ body, html {
   background-image: url('../images/duck.png');
   background-repeat: no-repeat;
   background-size: contain;
+  z-index: 12;
+}
+
+.missile {
+  width: 27px;
+  height: 120px;
+  background-image: url('../images/missile.png');
+  background-repeat: no-repeat;
+  background-size: contain;
   z-index: 11;
 }
 
