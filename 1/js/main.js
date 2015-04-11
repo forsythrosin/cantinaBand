@@ -106,6 +106,15 @@ audioController.onUpStart(function() {
 window.requestAnimationFrame(function loop() {
   audioController.step();
 
+  Object.keys(enemyBullets).forEach(function (id) {
+    var bullet = enemyBullets[id];
+    if (bullet.isOutOfBounds()) removeEnemyBullet(bullet);
+  });
+
+  Object.keys(playerBullets).forEach(function (id) {
+    var bullet = playerBullets[id];
+    if (bullet.isOutOfBounds()) removePlayerBullet(bullet);
+  });
   
   Object.keys(entities).forEach(function (id) {
     var entity = entities[id];
