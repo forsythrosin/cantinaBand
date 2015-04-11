@@ -25,18 +25,23 @@ audioController.initialize(false);
 
 audioController.onUpStart(function() {
   movingUp = true;
+  $('.spaceship').addClass('scream');
   //console.log('upStart');
 }).onUpEnd(function() {
   movingUp = false;
+  $('.spaceship').removeClass('scream');
   //console.log('upEnd');
 }).onDownStart(function() {
   movingDown = true;
+  $('.spaceship').addClass('scream');
   //console.log('downStart');
 }).onDownEnd(function() {
   movingDown = false;
+  $('.spaceship').removeClass('scream');
   //console.log('downEnd');
 }).onShoot(function() {
   var bullet = playerShip.shoot();
+  $('.spaceship').removeClass('scream');
   add(bullet);
   //console.log('shoot');
 });
@@ -76,9 +81,11 @@ $(document.body).keydown(function (event) {
   
   if (event.which === 40) {
     movingDown = true;
+    $('.spaceship').addClass('scream');
   }
   if (event.which === 38) {
     movingUp = true;
+    $('.spaceship').addClass('scream');
   }
 });
 
@@ -86,9 +93,11 @@ $(document.body).keydown(function (event) {
 $(document.body).keyup(function (event) {
   if (event.which === 40) {
     movingDown = false;
+    $('.spaceship').removeClass('scream');
   }
   if (event.which === 38) {
     movingUp = false;
+    $('.spaceship').removeClass('scream');
   }
 });
 
