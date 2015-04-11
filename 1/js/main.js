@@ -138,7 +138,7 @@ window.requestAnimationFrame(function loop() {
     var ePos = eb.getPos();
     
     var dist = vec2.squaredDistance(pPos, ePos);
-    if (dist < 8000) {
+    if (dist < 20000) {
       setGameOver();
     }
     
