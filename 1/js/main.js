@@ -98,7 +98,7 @@ audioController.onUpStart(function() {
   //console.log('upEnd');
 }).onDownStart(function() {
   movingDown = true;
-  $('.spaceship').addClass74('scream');
+  $('.spaceship').addClass('scream');
   //console.log('downStart');
 }).onDownEnd(function() {
   movingDown = false;
