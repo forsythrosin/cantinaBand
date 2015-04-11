@@ -105,10 +105,12 @@ audioController.onUpStart(function() {
   $('.spaceship').removeClass('scream');
   //console.log('downEnd');
 }).onShoot(function() {
-  var bullet = playerShip.shoot();
-  $('.spaceship').removeClass('scream');
-  addPlayerBullet(bullet);
-  //console.log('shoot');
+  if (Object.keys(playerBullets).length == 0) {
+    var bullet = playerShip.shoot();
+    $('.spaceship').removeClass('scream');
+    addPlayerBullet(bullet);
+    //console.log('shoot');
+  }
 });
 
 
@@ -138,7 +140,7 @@ window.requestAnimationFrame(function loop() {
     var ePos = eb.getPos();
     
     var dist = vec2.squaredDistance(pPos, ePos);
-    if (dist < 20000) {
+    if (dist < 12100) {
       setGameOver();
     }
     
@@ -152,7 +154,7 @@ window.requestAnimationFrame(function loop() {
       var ePos = eb.getPos();
 
       var dist = vec2.squaredDistance(pPos, ePos);
-      if (dist < 2500) {
+      if (dist < 4900) {
         removePlayerBullet(pb);
         removeEnemyBullet(eb);
       }
@@ -197,8 +199,10 @@ $(document.body).keydown(function (event) {
   
   var speed = vec2.create();  
   if (event.which === 32) { // space
-    var bullet = playerShip.shoot();
-    addPlayerBullet(bullet);
+    if (Object.keys(playerBullets).length == 0) {
+      var bullet = playerShip.shoot();
+      addPlayerBullet(bullet);
+    }
   }
   
   if (event.which === 40) {
