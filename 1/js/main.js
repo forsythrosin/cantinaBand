@@ -4,7 +4,11 @@ var glMatrix = require('gl-matrix');
 var vec2 = require('gl-matrix').vec2;
 var Ground = require('./ground'); 
 
-var playerShip = new PlayerShip();
+var wHeight = $(document).height();
+var wWidth = $(document).width();
+var windowSize = [wWidth, wHeight];
+
+var playerShip = new PlayerShip(windowSize);
 var ground = new Ground(4, 0.0, 0.3, 1.0);
 var ground2 = new Ground(2, 0.2, 0.35, 0.5);
 var ground3 = new Ground(1, 0.2, 0.45, 0.25);
