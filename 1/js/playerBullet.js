@@ -29,6 +29,11 @@ PlayerBullet.prototype.setPos = function (pos) {
   });
 }
 
+
+PlayerBullet.prototype.getPos = function () {
+  return this._pos;
+}
+
 PlayerBullet.prototype.setSpeed = function (speed) {
   vec2.copy(this._speed, speed);
 };

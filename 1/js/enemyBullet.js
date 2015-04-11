@@ -28,6 +28,10 @@ EnemyBullet.prototype.setPos = function (pos) {
   });
 }
 
+EnemyBullet.prototype.getPos = function () {
+  return this._pos;
+}
+
 EnemyBullet.prototype.setSpeed = function (speed) {
   vec2.copy(this._speed, speed);
 };
